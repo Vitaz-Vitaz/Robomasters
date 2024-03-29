@@ -1,0 +1,25 @@
+services:
+  solution:
+    build:
+      context: .
+      args:
+        IMAGE: nvidia/cuda:12.3.2-base-ubuntu20.04
+    network_mode: host
+    ipc: host 
+    tty: true
+    stdin_open: true
+    privileged: true
+    command: python3.10 /ws/solution.py
+
+    volumes:
+      - ./solution.py:/ws/solution.py
+
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY
+      - TASK_ID=1
+      - SERVER_ADDRESS=10.128.73.39
+      - SERVER_PORT=8000
+      - CAMERA_1=http://root:admin@10.128.73.31/mjpg/video.mjpg
+      - CAMERA_2=http://root:admin@10.128.73.38/mjpg/video.mjpg
